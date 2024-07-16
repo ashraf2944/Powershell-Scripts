@@ -41,12 +41,12 @@ foreach ($vm in $vms) {
 
 # Export the output array to a CSV file (if any VMs found)
 if ($output.Count -gt 0) {
-  $output | Export-Csv -Path "C:\Users\Ashraf.Shaikh\Documents\output_MMA_AMA_Extensions_dv1.csv" -NoTypeInformation
+  $output | Export-Csv -Path "path_to_excel_file\output_MMA_AMA_Extensions_dv1.csv" -NoTypeInformation
 } else {
   Write-Host "No VMs found with both MMA and Azure Monitor Agent extensions."
 }
 
-$csvData = Import-Csv -Path "C:\Users\Ashraf.Shaikh\Documents\output_MMA_Extension_dv1.csv"
+$csvData = Import-Csv -Path "path_to_excel_file\output_MMA_Extension_dv1.csv"
 az account set --subscription sub_evicore_dv1
 foreach ($row in $csvData) {
     # Extract the details from the CSV row
