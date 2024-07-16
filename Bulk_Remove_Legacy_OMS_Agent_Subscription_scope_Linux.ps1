@@ -1,4 +1,4 @@
-Set-AzContext -Subscription sub_evicore_dv1
+Set-AzContext -Subscription "subscription_name"
 $vms = Get-AzVM | Where-Object { $_.StorageProfile.OsDisk.OsType -eq "Linux" }
 
 # Initialize output array
@@ -40,13 +40,13 @@ foreach ($vm in $vms) {
 
 # Export the output array to a CSV file (if any VMs found)
 if ($output.Count -gt 0) {
-  $output | Export-Csv -Path "C:\Users\Ashraf.Shaikh\Documents\output_OMS_AMA_Extensions_dv1_Linux.csv" -NoTypeInformation
+  $output | Export-Csv -Path "path_to_excel_file\output_OMS_AMA_Extensions_dv1_Linux.csv" -NoTypeInformation
 } else {
   Write-Host "No Linux VMs found with both OMS and Azure Monitor Agent extensions."
 }
 
-$csvData = Import-Csv -Path "C:\Users\Ashraf.Shaikh\Documents\output_OMS_AMA_Extensions_dv1_Linux.csv"
-az account set --subscription sub_evicore_dv1 
+$csvData = Import-Csv -Path "path_to_excel_file\output_OMS_AMA_Extensions_dv1_Linux.csv"
+az account set --subscription "subscription_name"
 foreach ($row in $csvData) {
     # Extract the details from the CSV row
     $vmResourceId = $row.'VM Resource ID'
@@ -62,5 +62,5 @@ foreach ($row in $csvData) {
     Write-Host "$vmResourceId : $output"
  
     # Write the output and the resource ID to a log file
-    "$vmResourceId : $output" | Out-File "C:\Users\Ashraf.Shaikh\Documents\log_dv1.txt" -Append
+    "$vmResourceId : $output" | Out-File "path_to_excel_file\log_dv1.txt" -Append
 }
